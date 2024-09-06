@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 # Function to replace all labels with 'fish'
 def replace_all_labels_with_fish(json_file, new_label):
@@ -70,15 +71,36 @@ json_dir = os.path.dirname(os.path.realpath(__file__))
 # New label to replace all others
 new_label = 'fish'
 
+# Track the start time
+start_time = time.time()
+
 # Process all JSON files in the directory where this script is located
-for filename in os.listdir(json_dir):
+for i, filename in enumerate(os.listdir(json_dir), 1):
     if filename.endswith('.json'):
         json_file = os.path.join(json_dir, filename)
         
-        # First, replace all labels with 'fish'
-        replace_all_labels_with_fish(json_file, new_label)
+        try:
+            # Print the current file being processed
+            print(f"Processing file: {filename}")
+            
+            # First, replace all labels with 'fish'
+            replace_all_labels_with_fish(json_file, new_label)
         
-        # Then, replace points with 20x20 bounding boxes
-        replace_points_with_bboxes(json_file, box_width=20, box_height=20)
+            # Then, replace points with 20x20 bounding boxes
+            replace_points_with_bboxes(json_file, box_width=20, box_height=20)
+        
+            # Print the time elapsed for each file
+            current_time = time.time()
+            elapsed_time = current_time - start_time
+            print(f"Processed {i} files. Time elapsed: {elapsed_time:.2f} seconds")
+        
+        except Exception as e:
+            # Handle any errors that occur and continue with the next file
+            print(f"Error processing file {filename}: {e}")
 
-print("Preprocessing completed!")
+# Calculate total execution time
+end_time = time.time()
+total_time = end_time - start_time
+
+# Print the total execution time
+print(f"Total execution time: {total_time:.2f} seconds")
