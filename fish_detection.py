@@ -23,7 +23,7 @@ model.train(
     workers=2,                         # Number of data loading workers
     cache=False,                       # Don't cache data to reduce memory usage on your notebook
     plots=True,                        # Save training plots
-    save_dir="results/fish_detection", # Custom directory to save results
+    save_dir=f"{dataset_path}/results", # Custom directory to save results
 )
 
 # Validate the model after training
@@ -31,14 +31,8 @@ results = model.val(
     device=device,                     # Run validation on 'cpu'
     batch=16,                          # Batch size for validation
     workers=2,                         # Number of workers for validation
-    save_dir="results/fish_detection", # Save validation results in the same custom directory
+    save_dir=f"{dataset_path}/results", # Save validation results in the same custom directory
 )
 
-# Export the model to ONNX format (optional)
-model.export(format='onnx')
-
-# Evaluation metrics and confusion matrix will be saved in the directory 'results/fish_detection'
-print(f"Training and validation results saved to: {os.path.abspath('results/fish_detection')}")
-
-# Inference with the trained model (optional)
-# prediction = model.predict(source='path/to/image.jpg', save=True, save_dir="results/inference")
+# Inference with the trained model
+# prediction = model.predict(source='path/to/image.jpg', save=True, save_dir="f"{dataset_path}/results/inference")
