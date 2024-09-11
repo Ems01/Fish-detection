@@ -1,4 +1,3 @@
-import torch
 from ultralytics import YOLO
 import os
 
@@ -35,4 +34,4 @@ results = model.val(
 )
 
 # Inference with the trained model
-# prediction = model.predict(source='path/to/image.jpg', save=True, save_dir="f"{dataset_path}/results/inference")
+#prediction = model.predict(source='path/to/image.jpg', save=True, save_dir=f"{dataset_path}/results/inference")
