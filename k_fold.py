@@ -60,9 +60,8 @@ def divide_images_and_texts_into_groups(image_folder, output_folder, num_groups=
                         shutil.copy(os.path.join(image_folder, txt_file), os.path.join(training_folder, 'labels', txt_file))
 
     print(f'Division completed. The images and corresponding .txt files have been divided into {num_groups} groups and organized into fold directories.')
-    
-# Input and output folder
-image_folder = r'Dataset merged\FratelloCluster-BarbaraA'
-output_folder = r'Output fold'
 
+# Example usage
+image_folder = r'path/to/your/image_folder'
+output_folder = r'path/to/your/output_folder'
 divide_images_and_texts_into_groups(image_folder, output_folder)
