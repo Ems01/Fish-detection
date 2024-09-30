@@ -1,12 +1,12 @@
-from ultralytics import YOLO
 import os
-import torch
 import numpy as np  # To calculate the average performance
+import torch
 from codecarbon import EmissionsTracker  # Import the CO2 tracker
+from ultralytics import YOLO
 
 # Automatically get the current directory and append the dataset folder
 current_dir = os.getcwd()
-dataset_path = os.path.join(current_dir, "Output fold")
+dataset_path = os.path.join(current_dir, "OutputFold")
 
 # Check if GPU is available, otherwise raise an exception
 if not torch.cuda.is_available():
@@ -25,7 +25,6 @@ def log_emissions(fold_num, emissions, total=False):
             f.write(f"Total CO2 emissions for all folds: {emissions:.4f} kg\n")
         else:
             f.write(f"CO2 emitted for fold {fold_num}: {emissions:.4f} kg\n")
-
 
 # Function to perform cross-validation
 def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_epoch=None):
@@ -50,7 +49,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
         nc: 1
         names: ['fish']
         """
-        
+
         data_yaml_path = os.path.join(dataset_path, f'fold_{fold}_data.yaml')
         with open(data_yaml_path, 'w') as f:
             f.write(data_yaml_content)
@@ -72,37 +71,39 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
                 print(f"Checkpoint for epoch {resume_epoch} not found. Starting from scratch for fold {fold}.")
                 resume_epoch = None  # Reset resume_epoch if checkpoint is not found
 
-        # Start tracking emissions for this fold
-        tracker = EmissionsTracker()
+        # Start the emissions tracker
+        tracker = EmissionsTracker(log_level="WARNING")
         try:
             tracker.start()
+        except Exception as e:
+            print(f"Error starting emissions tracker: {e}")
 
-            # Train the model
-            model.train(
-                data=data_yaml_path,                 # Use the generated YAML file
-                epochs=epochs,                       # Total number of epochs
-                imgsz=640,                           # Image size
-                batch=16,                            # Batch size for training
-                device=device,                       # Use GPU
-                plots=True,                          # Save training plots
-                save_dir=save_dir,                   # Save results for each fold
-                save_period=checkpoint_interval,     # Save checkpoint every 'checkpoint_interval' epochs
-                resume=resume_epoch                  # Resume from the specified epoch if provided
-            )
+        model.train(
+            data=data_yaml_path,  # Use the generated YAML file
+            epochs=epochs,  # Total number of epochs
+            imgsz=640,  # Image size
+            batch=8,  # Batch size for training
+            device=device,  # Use GPU
+            plots=True,  # Save training plots
+            save_dir=save_dir,  # Save results for each fold
+            save_period=checkpoint_interval,  # Save checkpoint every 'checkpoint_interval' epochs
+            resume=resume_epoch  # Resume from the specified epoch if provided
+        )
 
-            # Validate the model after training
-            val_results = model.val(
-                device=device,                     # Run validation on GPU
-                batch=16,                          # Batch size for validation
-                workers=2,                         # Number of workers for validation
-                save_dir=save_dir,                 # Save validation results for each fold
-            )
-            print(f"Validation results for fold {fold}: {val_results}")
+        # Validate the model after training
+        val_results = model.val(
+            device=device,  # Run validation on GPU
+            batch=16,  # Batch size for validation
+            workers=2,  # Number of workers for validation
+            save_dir=save_dir,  # Save validation results for each fold
+        )
+        print(f"Validation results for fold {fold}: {val_results}")
 
-            # Append validation results to calculate average later
-            fold_performances.append(val_results['metrics'])  # Assuming val_results has a 'metrics' key
-
-            # Stop the emissions tracker and log the emissions produced
+        # Append validation results to calculate average later
+        fold_performances.append(val_results['metrics'])  # Assuming val_results has a 'metrics' key
+        
+        try:
+        # Stop the emissions tracker and log the emissions produced
             emissions = tracker.stop()
             total_emissions += emissions
             print(f"CO2 emitted for fold {fold}: {emissions:.4f} kg")
@@ -111,7 +112,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
             log_emissions(fold, emissions)
 
         except Exception as e:
-            print(f"Warning: CO2 emissions tracking failed for fold {fold}. Continuing training. Error: {e}")
+            print(f"Error stopping emissions tracker or saving data: {e}")
 
     # Calculate the average performance across all folds
     avg_performance = np.mean(fold_performances, axis=0)
@@ -123,9 +124,8 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
     # Print the total CO2 emissions
     print(f"Total CO2 emissions for {num_folds} folds: {total_emissions:.4f} kg")
 
-
-# If you want to resume training from epoch 20 in fold 1
-# run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10, resume_epoch=20)
-
-# Start cross validation
-run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10)
+if __name__ == '__main__':
+    # If you want to resume training from epoch 20 in fold 1
+    # run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10, resume_epoch=20)
+    # Start cross validation
+    run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10)
