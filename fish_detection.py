@@ -101,10 +101,10 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
         print(f"Validation results for fold {fold}: {val_results}")
 
         # Append validation results to calculate average later
-        fold_performances.append(val_results['metrics'])  # Assuming val_results has a 'metrics' key
+        fold_performances.append(val_results.results_dict)
         
         try:
-        # Stop the emissions tracker and log the emissions produced
+            # Stop the emissions tracker and log the emissions produced
             emissions = tracker.stop()
             total_emissions += emissions
             print(f"CO2 emitted for fold {fold}: {emissions:.4f} kg")
@@ -116,8 +116,8 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
             print(f"Error stopping emissions tracker or saving data: {e}")
 
     # Calculate the average performance across all folds
-    avg_performance = np.mean(fold_performances, axis=0)
-    print(f"Average performance across {num_folds} folds: {avg_performance}")
+    avg_map50 = np.mean([fold['metrics/mAP50(B)'] for fold in fold_performances])
+    print(f"Average mAP50 across all folds: {avg_map50}")
 
     # Log total CO2 emissions to the file
     log_emissions(fold=None, emissions=total_emissions, total=True)
@@ -125,8 +125,6 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
     # Print the total CO2 emissions
     print(f"Total CO2 emissions for {num_folds} folds: {total_emissions:.4f} kg")
 
-if __name__ == '__main__':
-    # If you want to resume training from epoch 20 in fold 1
-    # run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10, resume_epoch=20)
+if __name__ == '_main_':
     # Start cross validation
     run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10)
