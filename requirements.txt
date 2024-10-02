@@ -1,0 +1,6 @@
+torch>=1.8.0
+numpy>=1.19.0
+codecarbon>=2.7.1
+ultralytics>=8.0.0
+pandas>=1.2.0
+importlib_resources>=1.0.0

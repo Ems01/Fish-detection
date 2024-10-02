@@ -6,7 +6,7 @@ from ultralytics import YOLO
 
 # Automatically get the current directory and append the dataset folder
 current_dir = os.getcwd()
-dataset_path = os.path.join(current_dir, "OutputFold")
+dataset_path = os.path.join(current_dir, "dataset")
 
 # Check if GPU is available, otherwise raise an exception
 if not torch.cuda.is_available():
@@ -39,7 +39,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
         print(f"\n--- Fold {fold} ---")
 
         # Paths for the current fold
-        train_images = os.path.join(dataset_path, f'fold_{fold}', 'train', 'images')
+        train_images = os.path.join(dataset_path, f'fold_{fold}', 'training', 'images')
         test_images = os.path.join(dataset_path, f'fold_{fold}', 'test', 'images')
 
         # Create a temporary YAML file for each fold
@@ -84,6 +84,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
             imgsz=640,  # Image size
             batch=8,  # Batch size for training
             device=device,  # Use GPU
+            workers=0,  # Number of workers for validation
             plots=True,  # Save training plots
             save_dir=save_dir,  # Save results for each fold
             save_period=checkpoint_interval,  # Save checkpoint every 'checkpoint_interval' epochs
@@ -94,7 +95,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
         val_results = model.val(
             device=device,  # Run validation on GPU
             batch=16,  # Batch size for validation
-            workers=2,  # Number of workers for validation
+            workers=0,  # Number of workers for validation
             save_dir=save_dir,  # Save validation results for each fold
         )
         print(f"Validation results for fold {fold}: {val_results}")
