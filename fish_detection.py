@@ -125,6 +125,6 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
     # Print the total CO2 emissions
     print(f"Total CO2 emissions for {num_folds} folds: {total_emissions:.4f} kg")
 
-if __name__ == '_main_':
+if __name__ == '__main__':
     # Start cross validation
     run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10)
