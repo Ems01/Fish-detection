@@ -19,12 +19,10 @@ device = 'cuda'
 emissions_log_file = os.path.join(dataset_path, "co2_emissions_log.txt")
 
 # Function to log emissions data
-def log_emissions(fold_num, emissions, total=False):
+def log_emissions(emissions, total=False):
     with open(emissions_log_file, 'a') as f:
         if total:
             f.write(f"Total CO2 emissions for all folds: {emissions:.4f} kg\n")
-        else:
-            f.write(f"CO2 emitted for fold {fold_num}: {emissions:.4f} kg\n")
 
 # Function to perform cross-validation
 def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_epoch=None):
@@ -57,13 +55,17 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
         # Load the YOLOv8 model
         model = YOLO('yolov8l.pt')
 
-        # Set the checkpoint directory
-        save_dir = os.path.join(dataset_path, "results", f"fold_{fold}")
-        os.makedirs(save_dir, exist_ok=True)
+        # Set the save directory for training and validation separately for clarity
+        train_save_dir = os.path.join(current_dir, "runs", "detect", f"train_fold_{fold}")
+        val_save_dir = os.path.join(current_dir, "runs", "detect", f"val_fold_{fold}")
+        
+        # Ensure directories exist
+        os.makedirs(train_save_dir, exist_ok=True)
+        os.makedirs(val_save_dir, exist_ok=True)
 
         # If resuming from a checkpoint, load the last checkpoint
         if resume_epoch is not None and resume_epoch > 0:
-            checkpoint_path = os.path.join(save_dir, f'weights/epoch_{resume_epoch}.pt')
+            checkpoint_path = os.path.join(train_save_dir, f'weights/epoch_{resume_epoch}.pt')
             if os.path.exists(checkpoint_path):
                 print(f"Resuming training for fold {fold} from epoch {resume_epoch}")
                 model = YOLO(checkpoint_path)  # Load model from checkpoint
@@ -78,6 +80,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
         except Exception as e:
             print(f"Error starting emissions tracker: {e}")
 
+        # Training phase
         model.train(
             data=data_yaml_path,  # Use the generated YAML file
             epochs=epochs,  # Total number of epochs
@@ -86,31 +89,29 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
             device=device,  # Use GPU
             workers=0,  # Number of workers for validation
             plots=True,  # Save training plots
-            save_dir=save_dir,  # Save results for each fold
+            save_dir=train_save_dir,  # Save training results in train_fold_X
             save_period=checkpoint_interval,  # Save checkpoint every 'checkpoint_interval' epochs
             resume=resume_epoch  # Resume from the specified epoch if provided
         )
 
-        # Validate the model after training
+        # Validation phase
         val_results = model.val(
+            data=data_yaml_path,  # Use the same data.yaml
             device=device,  # Run validation on GPU
             batch=16,  # Batch size for validation
             workers=0,  # Number of workers for validation
-            save_dir=save_dir,  # Save validation results for each fold
+            save_dir=val_save_dir,  # Save validation results in val_fold_X
         )
         print(f"Validation results for fold {fold}: {val_results}")
 
         # Append validation results to calculate average later
         fold_performances.append(val_results.results_dict)
-        
+
         try:
             # Stop the emissions tracker and log the emissions produced
             emissions = tracker.stop()
             total_emissions += emissions
             print(f"CO2 emitted for fold {fold}: {emissions:.4f} kg")
-
-            # Log fold-specific emissions
-            log_emissions(fold, emissions)
 
         except Exception as e:
             print(f"Error stopping emissions tracker or saving data: {e}")
@@ -120,7 +121,7 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
     print(f"Average mAP50 across all folds: {avg_map50}")
 
     # Log total CO2 emissions to the file
-    log_emissions(fold=None, emissions=total_emissions, total=True)
+    log_emissions(emissions=total_emissions, total=True)
 
     # Print the total CO2 emissions
     print(f"Total CO2 emissions for {num_folds} folds: {total_emissions:.4f} kg")
@@ -128,3 +129,4 @@ def run_cross_validation(num_folds=5, epochs=50, checkpoint_interval=10, resume_
 if __name__ == '__main__':
     # Start cross validation
     run_cross_validation(num_folds=5, epochs=100, checkpoint_interval=10)
+
