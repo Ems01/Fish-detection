@@ -7,10 +7,10 @@ import os
 # Format: [TP, FP, FN, TN]
 confusion_matrices = [
     [7615, 4410, 4824, 0],  # Fold 1
-    [8000, 4200, 4700, 0],  # Fold 2
-    [7800, 4300, 4900, 0],  # Fold 3
-    [7500, 4500, 4850, 0],  # Fold 4
-    [7700, 4400, 4780, 0],  # Fold 5
+    [7882, 3280, 6133, 0],  # Fold 2
+    [9500, 3770, 7176, 0],  # Fold 3
+    [8872, 4092, 5732, 0],  # Fold 4
+    [7200, 7537, 4737, 0],  # Fold 5
 ]
 
 # Convert to a NumPy array for easier manipulation
