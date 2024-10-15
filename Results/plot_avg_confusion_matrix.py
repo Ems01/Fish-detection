@@ -6,11 +6,11 @@ import os
 # Define the confusion matrix values for each fold
 # Format: [TP, FP, FN, TN]
 confusion_matrices = [
-    [7615, 4410, 4824, 0],  # Fold 1
-    [7882, 3280, 6133, 0],  # Fold 2
-    [9500, 3770, 7176, 0],  # Fold 3
-    [8872, 4092, 5732, 0],  # Fold 4
-    [7200, 7537, 4737, 0],  # Fold 5
+    [7592, 3684, 4847, 0],  # Fold 1
+    [8056, 3618, 5959, 0],  # Fold 2
+    [9267, 3550, 7409, 0],  # Fold 3
+    [8753, 3692, 5851, 0],  # Fold 4
+    [7268, 7154, 4669, 0],  # Fold 5
 ]
 
 # Convert to a NumPy array for easier manipulation
