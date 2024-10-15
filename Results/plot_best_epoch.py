@@ -59,8 +59,8 @@ for idx, df in enumerate(dfs):
     plt.plot(precision, label='Precision', color='purple', linestyle='-.')
     plt.plot(recall, label='Recall', color='red', linestyle=':')
 
-    # Add a dashed vertical line for the best epoch
-    plt.axvline(x=best_epoch, color='red', linestyle=':', label='Best Epoch')
+    # Add a dashed vertical line for the best epoch in a different color
+    plt.axvline(x=best_epoch, color='black', linestyle=':', label='Best Epoch')
 
     # Add title, legend, and labels
     plt.title(f'Fold {idx + 1}: mAP50, Validation Box Loss, Class Loss, Precision & Recall')
