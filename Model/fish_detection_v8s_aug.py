@@ -95,7 +95,7 @@ def run_cross_validation(num_folds=5, epochs=200, checkpoint_interval=10, resume
             augment=True,  # Enable default augmentations
             hsv_s=0.4,    # Saturation variation
             hsv_v=0.4,    # Value (brightness) variation
-            scale=1.5,  # Scale image by 150%
+            scale=0.5,  # Scale image up/down by 50%
             fliplr=0.2,  # Horizontal flip
         )
 
