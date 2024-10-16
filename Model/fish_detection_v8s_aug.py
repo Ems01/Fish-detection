@@ -92,17 +92,11 @@ def run_cross_validation(num_folds=5, epochs=200, checkpoint_interval=10, resume
             save_dir=train_save_dir,  # Save training results in train_fold_X
             save_period=checkpoint_interval,  # Save checkpoint every 'checkpoint_interval' epochs
             resume=resume_epoch,  # Resume from the specified epoch if provided
-            augment=True,  # Enable default augmentations (flips, rotations, etc.)
-            hsv_h=0.015,  # Hue variation
-            hsv_s=0.7,    # Saturation variation
+            augment=True,  # Enable default augmentations
+            hsv_s=0.4,    # Saturation variation
             hsv_v=0.4,    # Value (brightness) variation
-            degrees=5.0,  # Rotate the image up to 5 degrees
-            translate=0.1,  # Translate by up to 10%
-            scale=0.5,  # Scale image up/down by 50%
-            shear=0.5,  # Shear image up to 50%
-            perspective=0.001,  # Apply small perspective changes
-            flipud=0.0,  # Vertical flip (disabled)
-            fliplr=0.5,  # Horizontal flip
+            scale=1.5,  # Scale image by 150%
+            fliplr=0.2,  # Horizontal flip
         )
 
         # Validation phase
