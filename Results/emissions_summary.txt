@@ -1,0 +1,6 @@
+large100: 2.92 kg CO2
+small100: 2.00 kg CO2
+small300: 4.85 kg CO2
+smallAug: 3.90 kg CO2
+
+Total Emissions: 13.67 kg CO2

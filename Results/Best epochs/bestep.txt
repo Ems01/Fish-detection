@@ -1,0 +1,27 @@
+SMALL 100
+Fold 1: Best epoch = 78, Combined Score = -1.0067
+Fold 2: Best epoch = 86, Combined Score = -1.0129
+Fold 3: Best epoch = 80, Combined Score = -0.9188
+Fold 4: Best epoch = 86, Combined Score = -0.9436
+Fold 5: Best epoch = 98, Combined Score = -1.1750
+
+LARGE 100
+Fold 1: Best epoch = 100, Combined Score = -1.0165
+Fold 2: Best epoch = 86, Combined Score = -0.9921
+Fold 3: Best epoch = 88, Combined Score = -0.8990
+Fold 4: Best epoch = 78, Combined Score = -0.9532
+Fold 5: Best epoch = 83, Combined Score = -1.1582
+
+SMALL 300
+Fold 1: Best epoch = 225, Combined Score = -0.9649
+Fold 2: Best epoch = 193, Combined Score = -0.9627
+Fold 3: Best epoch = 155, Combined Score = -0.9144
+Fold 4: Best epoch = 162, Combined Score = -0.9014
+Fold 5: Best epoch = 196, Combined Score = -1.1436
+
+SMALL 300 AUG
+Fold 1: Best epoch = 198, Combined Score = -0.9346
+Fold 2: Best epoch = 134, Combined Score = -0.9340
+Fold 3: Best epoch = 123, Combined Score = -0.8848
+Fold 4: Best epoch = 151, Combined Score = -0.9431
+Fold 5: Best epoch = 143, Combined Score = -1.1197
