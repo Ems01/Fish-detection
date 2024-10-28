@@ -63,67 +63,29 @@ for subfolder in os.listdir(base_folder):
                 ('metrics/mAP50-95(B)', 'Mean Average Precision at IoU 50-95')
             ]
 
-            # 1. Plot comparison of train and val (mean and per fold) for each loss type
+            # 1. Plot comparison of train and val means for each loss type
             for train_field, val_field in loss_pairs:
-                # Train and Val combined comparison plot for box_loss and cls_loss
-                if train_field in ['train/box_loss', 'train/cls_loss']:
-                    plt.figure(figsize=(10, 6))
-                    
-                    # Plot all curves for each CSV file (train and val)
-                    for idx, df in enumerate(dfs):
-                        plt.plot(df[train_field], alpha=0.5, label=f'Fold {idx+1} Train')
-                        plt.plot(df[val_field], alpha=0.5, linestyle='--', label=f'Fold {idx+1} Validation')
-
-                    # Plot the mean curves for train and val
-                    plt.plot(mean_df[train_field], label='Mean Train', color='blue', linewidth=2)
-                    plt.plot(mean_df[val_field], label='Mean Validation', color='red', linestyle='--', linewidth=2)
-                    
-                    # Add title, legend, and labels
-                    combined_title = f'{train_field.split("/")[1].title()} Comparison'
-                    plt.title(combined_title, fontsize=title_font_size)
-                    plt.legend(fontsize=legend_font_size)
-                    plt.xlabel('Epochs', fontsize=axis_label_font_size)
-                    plt.ylabel('Value', fontsize=axis_label_font_size)
-                    plt.xticks(fontsize=tick_label_font_size)
-                    plt.yticks(fontsize=tick_label_font_size)
-                    
-                    # Save the figure
-                    filename = os.path.join(output_folder, f'combined_{train_field.split("/")[1].lower()}.png')
-                    plt.savefig(filename)
-                    plt.close()
-
-                # Individual train and val plots as before (not modified)
-                # Train plot: Fold and Mean comparison
                 plt.figure(figsize=(10, 6))
-                for idx, df in enumerate(dfs):
-                    plt.plot(df[train_field], alpha=0.5, label=f'Fold {idx+1} Train')
-                plt.plot(mean_df[train_field], label='Mean Train', color='black', linewidth=2, linestyle='--')
-                plt.title(f'{train_field.split("/")[1].title()} Train', fontsize=title_font_size)
+                
+                # Plot the mean curves for train and val only
+                plt.plot(mean_df[train_field], label='Mean Train', color='blue', linewidth=2)
+                plt.plot(mean_df[val_field], label='Mean Validation', color='red', linestyle='--', linewidth=2)
+                
+                # Add title, legend, and labels
+                combined_title = f'{train_field.split("/")[1].title()} Comparison (Mean Only)'
+                plt.title(combined_title, fontsize=title_font_size)
                 plt.legend(fontsize=legend_font_size)
                 plt.xlabel('Epochs', fontsize=axis_label_font_size)
                 plt.ylabel('Value', fontsize=axis_label_font_size)
                 plt.xticks(fontsize=tick_label_font_size)
                 plt.yticks(fontsize=tick_label_font_size)
-                filename = os.path.join(output_folder, f'train_{train_field.split("/")[1].lower()}.png')
+                
+                # Save the figure
+                filename = os.path.join(output_folder, f'combined_{train_field.split("/")[1].lower()}_mean_only.png')
                 plt.savefig(filename)
                 plt.close()
 
-                # Val plot: Fold and Mean comparison
-                plt.figure(figsize=(10, 6))
-                for idx, df in enumerate(dfs):
-                    plt.plot(df[val_field], alpha=0.5, label=f'Fold {idx+1} Validation')
-                plt.plot(mean_df[val_field], label='Mean Validation', color='black', linewidth=2)
-                plt.title(f'{val_field.split("/")[1].title()} Validation', fontsize=title_font_size)
-                plt.legend(fontsize=legend_font_size)
-                plt.xlabel('Epochs', fontsize=axis_label_font_size)
-                plt.ylabel('Value', fontsize=axis_label_font_size)
-                plt.xticks(fontsize=tick_label_font_size)
-                plt.yticks(fontsize=tick_label_font_size)
-                filename = os.path.join(output_folder, f'val_{val_field.split("/")[1].lower()}.png')
-                plt.savefig(filename)
-                plt.close()
-
-            # 2. Plot single graphs for each metric with folds and mean
+            # 2. Plot single graphs for each metric with folds and mean (unchanged)
             for field, pretty_name in metrics_fields:
                 plt.figure(figsize=(10, 6))  # Create a new figure
                 for idx, df in enumerate(dfs):
