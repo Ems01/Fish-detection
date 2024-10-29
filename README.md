@@ -1,6 +1,6 @@
 # Fish Detection using ROV images
 
-This repository contains the codes for the project for Computer Vision and Deep Learning exam on UNIVPM.
+In this repository you will find the codes of the project for the Computer Vision and Deep Learning exam at the UNIVPM.
 
 ## Abstract
 This project presents a fish detection approach using the YOLOv8 model applied to images captured by Remotely Operated Vehicles (ROVs) in different ocean depths and marine environments. In addition to the standard detection pipeline, we developed an alternative weighted sum function that considers the best training epoch by evaluating multiple metrics. The methodology, challenges and results of the detection are discussed, demonstrating the effectiveness of the proposed technique in dealing with the variability of underwater images.
@@ -49,7 +49,7 @@ An automated script divided each dataset into five portions for cross-validation
 
 ### Hyperparameters and Augmentation
 
-Training was conducted with 5-fold cross-validation on a remote server with Docker and GPU support. The configurations used are summarized in Table 3 below.
+Training was conducted with 5-fold cross-validation on a remote server with Docker and GPU support. The configurations used are summarized in Table below.
 
 | **Model**       | **Epochs** | **Batch Size** | **Image Size** | **Augmentation** |
 |-----------------|------------|----------------|----------------|-------------------|
@@ -57,6 +57,8 @@ Training was conducted with 5-fold cross-validation on a remote server with Dock
 | YOLOv8 Large    | 100        | 8              | 640x640       | No               |
 | YOLOv8 Small    | 300        | 8              | 640x640       | No               |
 | YOLOv8 Small    | 300        | 16             | 640x640       | Yes              |
+
+*Table: Hyperparameters settings for each method.*
 
 Augmentation settings used in the latter training include:
 - **hsv_s=0.4**: 40% saturation variation
