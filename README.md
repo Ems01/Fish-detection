@@ -39,8 +39,6 @@ Developing a tool to detect fish in these ROV images is critical to understandin
 
 ## ⚙️ Methodology
 
-## Methodology
-
 ### Cross-Validation and Dataset Aggregation
 
 To improve generalizability, a 5-fold cross-validation approach was used. Smaller datasets were merged based on characteristics like brightness, depth, and water color, resulting in six datasets
