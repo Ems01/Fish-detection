@@ -12,9 +12,9 @@ vision
 
 ### 📗 Thesis and slideshow download:
 
-[Fish Detection using ROV images [PPTX]](todolink)
+[Fish Detection using YOLOv8 on ROV images [PPTX]](todolink)
 
-[Fish Detection using ROV images [PDF]](https://raw.githubusercontent.com/Ems01/Fish-detection/main/Fish_Detection_using_Yolov8_on_ROV_images_Staffolani_Sardellini.pdf)
+[Fish Detection using YOLOv8 on ROV images [PDF]](https://github.com/Ems01/Fish-detection/raw/main/Fish_Detection_using_Yolov8_on_ROV_images_Staffolani_Sardellini.pdf)
 
 ---
 
