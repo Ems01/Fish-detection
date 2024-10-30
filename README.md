@@ -1,4 +1,4 @@
-# Fish Detection using ROV images
+# Fish Detection using YOLOv8 on ROV images
 
 In this repository you will find the codes of the project for the Computer Vision and Deep Learning exam at the UNIVPM.
 
