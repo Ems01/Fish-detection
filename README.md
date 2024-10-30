@@ -39,8 +39,6 @@ Developing a tool to detect fish in these ROV images is critical to understandin
 
 ## ⚙️ Methodology
 
-## Methodology
-
 ### Cross-Validation and Dataset Aggregation
 
 To improve generalizability, a 5-fold cross-validation approach was used. Smaller datasets were merged based on characteristics like brightness, depth, and water color, resulting in six datasets
@@ -91,4 +89,4 @@ Additionally, we implemented a custom weighted sum function to consider mAP, F1 
 | Name              | Email                       | GitHub                                          |
 |-------------------|-----------------------------|-------------------------------------------------|
 | Federico Staffolani   | s1114954@studenti.univpm.it | [fedeStaffo](https://github.com/fedeStaffo)               |
-| Enrico Maria Sardellini | s1120355@studenti.univpm.it | [Ems](https://github.com/Ems01) |
+| Enrico Maria Sardellini | s1120355@studenti.univpm.it | [Ems01](https://github.com/Ems01) |
