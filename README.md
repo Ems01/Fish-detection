@@ -1,8 +1,6 @@
 # Fish Detection using YOLOv8 on ROV images
 
-In this repository you will find the codes of the project for the Computer Vision and Deep Learning exam at the UNIVPM.
-
-## Project Statement
+## Project Statement in brief
 This project presents a fish detection approach using the YOLOv8 model applied to images captured by Remotely Operated Vehicles (ROVs) in different ocean depths and marine environments. In addition to the standard detection pipeline, we developed an alternative weighted sum function that considers the best training epoch by evaluating multiple metrics. The methodology, challenges and results of the detection are discussed, demonstrating the effectiveness of the proposed technique in dealing with the variability of underwater images.
 
 **Keywords**: fish detection, YOLOv8, ROV images, underwater detection, computer
