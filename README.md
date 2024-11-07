@@ -20,14 +20,14 @@ vision
 
 ## 📘 Table of Contents
 
-* [🎯 Project Goal](#statement)
+* [🎯 Goal](#statement)
 * [⚙️ Methodology](#methodology)
 * [📈 Results](#results)
 * [👨🏻‍💻 Authors](#Authors)
 
 <a name="statement"/></a>
 
-## 🎯 Project Goal
+## 🎯 Goal
 
 Daily fish abundance surveys in the Adriatic Sea are conducted using remotely operated vehicles (ROVs) near offshore structures.
 
