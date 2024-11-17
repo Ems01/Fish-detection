@@ -6,12 +6,11 @@ This project presents a fish detection approach using the YOLOv8 model applied t
 vision
 
 ---
-<!-- ### 📗 Paper and slideshow download: -->
-### 📗 Paper download:
+### 📗 Paper and slideshow download:
 
 [Fish Detection using YOLOv8 on ROV images [PDF]](https://github.com/Ems01/Fish-detection/raw/main/Fish_Detection_using_Yolov8_on_ROV_images_Staffolani_Sardellini.pdf)
 
-<!-- [Fish Detection using YOLOv8 on ROV images [PPTX]](https://github.com/Ems01/Fish-detection/raw/main/Fish_Detection_using_Yolov8_on_ROV_images_Staffolani_Sardellini.pptx) -->
+[Fish Detection using YOLOv8 on ROV images [PPTX]](https://github.com/Ems01/Fish-detection/raw/main/Fish_Detection_using_Yolov8_on_ROV_images_Staffolani_Sardellini.pptx)
 
 ---
 
